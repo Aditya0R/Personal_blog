@@ -1,0 +1,2 @@
+/* You can keep Tailwind as the main style system, this is just for tiny overrides */
+.prose p { margin: 0.6rem 0; }

@@ -1,0 +1,59 @@
+{% extends "base.html" %}
+{% block title %}Subscribe{% endblock %}
+{% block content %}
+<h1 class="text-xl font-semibold mb-4">Choose your plan</h1>
+
+<div class="grid md:grid-cols-3 gap-4 mb-8">
+  {% for code, name, price, perks in [
+      (plan.BASIC.value, "Basic", plan_price(plan.BASIC.value), ["Premium posts", "Community access"]),
+      (plan.PRO.value, "Pro", plan_price(plan.PRO.value), ["All Basic perks", "Ad-free", "Monthly bonus"]),
+      (plan.ELITE.value, "Elite", plan_price(plan.ELITE.value), ["All Pro perks", "Early access", "Q&A + Resources"])
+    ]
+  %}
+  <div class="rounded-xl p-5 bg-slate-900/60 border border-slate-800">
+    <div class="flex items-baseline justify-between">
+      <h3 class="text-lg font-semibold">{{ name }}</h3>
+      <div class="text-2xl font-bold">₹{{ price }}</div>
+    </div>
+    <ul class="mt-3 text-slate-300 space-y-1 list-disc pl-5">
+      {% for perk in perks %}<li>{{ perk }}</li>{% endfor %}
+    </ul>
+    <div class="mt-4 flex gap-2">
+      {% if btcpay_enabled %}
+        <a href="{{ url_for('btcpay_create', plan_code=code) }}" class="px-3 py-1.5 rounded-lg bg-emerald-700 hover:bg-emerald-600">Pay with Crypto</a>
+      {% endif %}
+    </div>
+  </div>
+  {% endfor %}
+</div>
+
+<div class="rounded-xl p-6 bg-slate-900/60 border border-slate-800">
+  <h2 class="text-lg font-semibold mb-3">Pay via UPI</h2>
+  <div class="grid md:grid-cols-2 gap-6">
+    <div>
+      <p class="text-slate-300">Scan & pay with PhonePe / Google Pay / Paytm</p>
+      <div class="mt-3 rounded-lg border border-slate-700 overflow-hidden bg-slate-900">
+         <img src="{{ url_for('static', filename='images/WhatsApp Image 2025-08-25 at 10.54.08 PM.jpeg') }}" alt="UPI QR" class="w-full">
+      </div>
+      <p class="text-sm text-slate-400 mt-2">Name: {{ upi_name }} • UPI: <code class="px-1 rounded bg-slate-800">{{ upi_vpa }}</code></p>
+      <p class="text-sm text-slate-400">Send exact amount for your plan.</p>
+    </div>
+    <div>
+      <form method="post" class="space-y-4">
+        {{ upi_form.csrf_token }}
+        <div>
+          <label class="block text-sm mb-1">Plan</label>
+          {{ upi_form.plan(class_="w-full px-3 py-2 rounded-lg bg-slate-800 border border-slate-700") }}
+        </div>
+        <div>
+          <label class="block text-sm mb-1">Transaction / UTR ID</label>
+          {{ upi_form.txn_id(class_="w-full px-3 py-2 rounded-lg bg-slate-800 border border-slate-700", placeholder="e.g. 1234567890ABC") }}
+          {% for e in upi_form.txn_id.errors %}<p class="text-rose-400 text-sm">{{ e }}</p>{% endfor %}
+        </div>
+        {{ upi_form.submit(class_="px-4 py-2 rounded-lg bg-indigo-700 hover:bg-indigo-600") }}
+      </form>
+      <p class="text-xs text-slate-400 mt-2">We will verify and upgrade you within minutes.</p>
+    </div>
+  </div>
+</div>
+{% endblock %}

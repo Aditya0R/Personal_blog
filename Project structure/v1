@@ -1,0 +1,22 @@
+personal_blog/
+├─ app.py
+├─ config.py
+├─ requirements.txt
+├─ instance/                # created automatically at first run
+├─ static/
+│  ├─ style.css             # optional overrides
+│  └─ upi/
+│     └─ qr.png             # put your UPI QR image here (any filename is fine)
+└─ templates/
+   ├─ base.html
+   ├─ index.html
+   ├─ post.html
+   ├─ login.html
+   ├─ register.html
+   ├─ create_post.html
+   ├─ edit_post.html
+   ├─ account.html
+   ├─ subscribe.html
+   ├─ admin_dashboard.html
+   ├─ payments_admin.html
+   └─ 404.html

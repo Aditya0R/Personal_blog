@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+{% block title %}Write Post{% endblock %}
+{% block content %}
+<div class="max-w-2xl mx-auto rounded-xl p-6 bg-slate-900/60 border border-slate-800">
+  <h1 class="text-xl font-semibold mb-4">Write a new post</h1>
+  <form method="post" class="space-y-4">
+    {{ form.csrf_token }}
+    <div>
+      <label class="block text-sm mb-1">Title</label>
+      {{ form.title(class_="w-full px-3 py-2 rounded-lg bg-slate-800 border border-slate-700") }}
+      {% for e in form.title.errors %}<p class="text-rose-400 text-sm">{{ e }}</p>{% endfor %}
+    </div>
+    <div>
+      <label class="block text-sm mb-1">Content</label>
+      {{ form.content(class_="w-full h-56 px-3 py-2 rounded-lg bg-slate-800 border border-slate-700") }}
+      {% for e in form.content.errors %}<p class="text-rose-400 text-sm">{{ e }}</p>{% endfor %}
+    </div>
+    <div class="flex items-center gap-6">
+      <label class="inline-flex items-center gap-2 text-sm">
+        {{ form.is_premium() }} <span>Premium</span>
+      </label>
+      <label class="inline-flex items-center gap-2 text-sm">
+        {{ form.featured() }} <span>Featured</span>
+      </label>
+    </div>
+    {{ form.submit(class_="px-4 py-2 rounded-lg bg-indigo-700 hover:bg-indigo-600") }}
+  </form>
+</div>
+{% endblock %}

@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+{% block title %}Admin{% endblock %}
+{% block content %}
+<h1 class="text-xl font-semibold mb-4">Owner Dashboard</h1>
+<div class="grid md:grid-cols-3 gap-4">
+  <div class="rounded-xl p-5 bg-slate-900/60 border border-slate-800"><div class="text-slate-400">Users</div><div class="text-2xl">{{ users_count }}</div></div>
+  <div class="rounded-xl p-5 bg-slate-900/60 border border-slate-800"><div class="text-slate-400">Posts</div><div class="text-2xl">{{ posts_count }}</div></div>
+  <div class="rounded-xl p-5 bg-slate-900/60 border border-slate-800"><div class="text-slate-400">Pending Payments</div><div class="text-2xl">{{ pending_payments }}</div></div>
+</div>
+
+<div class="mt-6">
+  <a class="px-4 py-2 rounded-lg bg-slate-800 hover:bg-slate-700" href="{{ url_for('admin_payments') }}">Review Payments</a>
+</div>
+{% endblock %}

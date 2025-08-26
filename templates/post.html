@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+{% block title %}{{ post.title }} — Post{% endblock %}
+{% block content %}
+<article class="rounded-xl p-6 bg-slate-900/60 border border-slate-800">
+  <div class="text-slate-400 text-sm mb-1">
+    {{ post.created_at.strftime("%b %d, %Y") }} • by {{ post.author.username }}
+    {% if post.is_premium %} • <span class="text-amber-300">Premium</span>{% endif %}
+  </div>
+  <h1 class="text-2xl font-bold mb-4">{{ post.title }}</h1>
+  <div class="prose prose-invert max-w-none">{{ post.content | replace('\n','<br>') | safe }}</div>
+</article>
+{% endblock %}
